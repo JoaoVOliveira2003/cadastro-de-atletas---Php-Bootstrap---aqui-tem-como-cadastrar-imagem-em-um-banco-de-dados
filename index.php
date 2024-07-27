@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -96,7 +97,7 @@
                             <label for="foto" class="form-label">Inserir Foto:</label>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="foto" name="image" accept="image/*">
+                                    <input type="file" class="custom-file-input" id="foto" name="foto" accept="image/*">
                                     <label class="custom-file-label" for="foto">Escolher arquivo</label>
                                 </div>
                             </div>
@@ -107,9 +108,6 @@
                             <button type="submit" onclick="gravarPessoa()" class="btn btn-primary">Gravar</button>
                             <button type="button" class="btn btn-secondary ml-2" onclick="location.href='index.html';">Sair</button>
                         </div>
-
-                        
-
                     </div>
                 </div>
             </div>

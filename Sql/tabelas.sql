@@ -1,18 +1,17 @@
 CREATE TABLE `atletas` (
-  `id_atletas` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(50) NOT NULL,
-  `instituicao` varchar(10) NOT NULL,
-  `rg` varchar(25) NOT NULL,
-  `matricula` varchar(20) NOT NULL,
-  `rg` varchar(10) DEFAULT NULL,
-    basquete BOOLEAN,
-    futebolCampo BOOLEAN,
-    futsal BOOLEAN,
-    handebol BOOLEAN,
-    tenisDeMesa BOOLEAN,
-    voleibol BOOLEAN,
-    voleiPraia BOOLEAN,
-    xadrez BOOLEAN,
+  `id_atletas` INT(11) NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(50) NOT NULL,
+  `instituicao` VARCHAR(10) NOT NULL,
+  `matricula` VARCHAR(20) NOT NULL,
+  `rg` VARCHAR(10) DEFAULT NULL,
+  `basquete` TINYINT(1) DEFAULT NULL,
+  `futebolCampo` TINYINT(1) DEFAULT NULL,
+  `futsal` TINYINT(1) DEFAULT NULL,
+  `handebol` TINYINT(1) DEFAULT NULL,
+  `tenisDeMesa` TINYINT(1) DEFAULT NULL,
+  `voleibol` TINYINT(1) DEFAULT NULL,
+  `voleiPraia` TINYINT(1) DEFAULT NULL,
+  `xadrez` TINYINT(1) DEFAULT NULL,
+  `caminhoImagem` VARCHAR(500) DEFAULT NULL,
+  PRIMARY KEY (`id_atletas`)
 );
-
-ALTER TABLE tads.atletas ADD caminhoImage VARCHAR(50);

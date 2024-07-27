@@ -1,6 +1,5 @@
 <?php
 
-
 // Verifica se a requisição foi feita via método POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
@@ -12,21 +11,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $instituicao = $_POST['instituicao'];
     $matricula = $_POST['matricula'];
     $rg = $_POST['rg'];
-    $foto=$_POST['foto'];
 
+    // Corrigido: Verifica se o campo 'modalidadeColetivas' está definido
+    $modalidadeColetivas = isset($_POST['modalidadeColetivas']) ? $_POST['modalidadeColetivas'] : array();
+    
     // Verifica se foram selecionadas modalidades coletivas e define os valores como 0 ou 1
-    $basquete = in_array('basquete', $_POST['modalidadeColetivas']) ? 1 : 0;
-    $futebolCampo = in_array('futebolCampo', $_POST['modalidadeColetivas']) ? 1 : 0;
-    $futsal = in_array('futsal', $_POST['modalidadeColetivas']) ? 1 : 0;
-    $handebol = in_array('handebol', $_POST['modalidadeColetivas']) ? 1 : 0;
-    $tenisDeMesa = in_array('tenisMesa', $_POST['modalidadeColetivas']) ? 1 : 0;
-    $voleibol = in_array('voleibal', $_POST['modalidadeColetivas']) ? 1 : 0;
-    $voleiPraia = in_array('voleiPraia', $_POST['modalidadeColetivas']) ? 1 : 0;
-    $xadrez = in_array('xadrez', $_POST['modalidadeColetivas']) ? 1 : 0;
+    $basquete = in_array('basquete', $modalidadeColetivas) ? 1 : 0;
+    $futebolCampo = in_array('futebolCampo', $modalidadeColetivas) ? 1 : 0;
+    $futsal = in_array('futsal', $modalidadeColetivas) ? 1 : 0;
+    $handebol = in_array('handebol', $modalidadeColetivas) ? 1 : 0;
+    $tenisDeMesa = in_array('tenisDeMesa', $modalidadeColetivas) ? 1 : 0;  // Corrigido
+    $voleibol = in_array('voleibol', $modalidadeColetivas) ? 1 : 0;  // Corrigido
+    $voleiPraia = in_array('voleiPraia', $modalidadeColetivas) ? 1 : 0;
+    $xadrez = in_array('xadrez', $modalidadeColetivas) ? 1 : 0;
 
-
+    $caminho = '' ;//'E:/Users/user/Desktop/Xamp2/htdocs/CadastroDeAtletas/upload/';
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] == UPLOAD_ERR_OK) {
+        $nomeFoto = $_FILES['foto']['name'];
+    } else {
+        $nomeFoto ='' ;//'Nenhum arquivo selecionado';
+    }
+    $caminhoImagem = '' ;//$caminho . $nomeFoto;
+    
     // Prepara a consulta SQL para inserir na tabela atletas
-    $sql = "INSERT INTO atletas (nome, instituicao, matricula, rg, basquete, futebolCampo, futsal, handebol, tenisDeMesa, voleibol, voleiPraia, xadrez) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO atletas (nome, instituicao, matricula, rg, basquete, futebolCampo, futsal, handebol, tenisDeMesa, voleibol, voleiPraia, xadrez, caminhoImagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Prepara a declaração SQL
     $stmt = $conexao->prepare($sql);
@@ -39,15 +47,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Bind dos parâmetros e execução da consulta
-    $stmt->bind_param("ssssiiiiiiii", $nome, $instituicao, $matricula, $rg, $basquete, $futebolCampo, $futsal, $handebol, $tenisDeMesa, $voleibol, $voleiPraia, $xadrez);
+    // Corrigido: String de tipos 'ssssiiiiiiii' deve corresponder ao número de variáveis
+    $stmt->bind_param("ssssiiiiiiiis", $nome, $instituicao, $matricula, $rg, $basquete, $futebolCampo, $futsal, 
+            $handebol, $tenisDeMesa, $voleibol, $voleiPraia, $xadrez, $caminhoImagem);
 
     if ($stmt->execute()) {
         // Se a inserção foi bem-sucedida, retorna um JSON indicando sucesso
         $response = array('success' => true);
         echo json_encode($response);
-
-        // Redireciona para a página Desenvolvimento.php após 2 segundos
-        exit;
     } else {
         // Se ocorreu algum erro na execução da consulta, retorna um JSON com a mensagem de erro
         $response = array('success' => false, 'error' => 'Erro ao inserir atleta no banco de dados: ' . $stmt->error);

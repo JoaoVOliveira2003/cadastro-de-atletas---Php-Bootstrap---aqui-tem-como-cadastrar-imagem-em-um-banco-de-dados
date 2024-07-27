@@ -4,21 +4,17 @@ function funfou() {
 
 function limparCampos() {
     document.getElementById('nome').value = '';
-    document.getElementById('cargo').value = '';
-    document.getElementById('email').value = '';
-    document.getElementById('telefonePessoal').value = '';
-    document.getElementById('telefoneComercial').value = ''; 
-    document.getElementById('cep').value = '';
-    document.getElementById('orgao').value = '';
-    document.getElementById('endereco').value = '';
-    document.getElementById('numero').value = '';
-    document.getElementById('complemento').value = '';
-    document.getElementById('bairro').value = '';
-    document.getElementById('uf').value = '';
-    document.getElementById('municipio').value = '';
-    document.getElementById('url').value = '';
+    document.getElementById('instituicao').value = '';
+    document.getElementById('rg').value = '';
+    document.getElementById('matricula').value = '';
+    document.getElementById('sexo').value = '';
+    document.querySelectorAll('input[name="modalidadeColetivas[]"]').forEach(checkbox => checkbox.checked = false);
+    document.getElementById('foto').value = '';
+    var fileLabel = document.querySelector('.custom-file-label');
+    if (fileLabel) {
+        fileLabel.innerText = 'Escolher arquivo';
+    }
 }
-
 // Função para gravar pessoa no banco de dados
 function gravarPessoa() {
     SalvarArquivo();
