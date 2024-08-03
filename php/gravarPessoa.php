@@ -25,13 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $voleiPraia = in_array('voleiPraia', $modalidadeColetivas) ? 1 : 0;
     $xadrez = in_array('xadrez', $modalidadeColetivas) ? 1 : 0;
 
-    $caminho = '' ;//'E:/Users/user/Desktop/Xamp2/htdocs/CadastroDeAtletas/upload/';
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] == UPLOAD_ERR_OK) {
+        $caminho = 'upload/' ;//';
         $nomeFoto = $_FILES['foto']['name'];
     } else {
         $nomeFoto ='' ;//'Nenhum arquivo selecionado';
     }
-    $caminhoImagem = '' ;//$caminho . $nomeFoto;
+
+    $caminhoImagem = $caminho . $nomeFoto;
+
     
     // Prepara a consulta SQL para inserir na tabela atletas
     $sql = "INSERT INTO atletas (nome, instituicao, matricula, rg, basquete, futebolCampo, futsal, handebol, tenisDeMesa, voleibol, voleiPraia, xadrez, caminhoImagem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
